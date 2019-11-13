@@ -7,15 +7,19 @@ import { FluentVueObject, FluentVueOptions } from './types'
 import { VueConstructor } from 'vue/types/vue'
 import { Pattern, FluentBundle } from '@fluent/bundle'
 
+interface IForceUpdatable {
+  $forceUpdate(): void
+}
+
 export default class FluentVue implements FluentVueObject {
-  private subscribers: Map<Vue, boolean>
+  private subscribers: Map<IForceUpdatable, boolean>
   private bundlesIterable: CachedSyncIterable
   private _bundles: FluentBundle[]
 
-  subscribe(vue: Vue): void {
+  subscribe(vue: IForceUpdatable): void {
     this.subscribers.set(vue, true)
   }
-  unsubscribe(vue: Vue): void {
+  unsubscribe(vue: IForceUpdatable): void {
     this.subscribers.delete(vue)
   }
 
@@ -34,10 +38,50 @@ export default class FluentVue implements FluentVueObject {
 
   static install: (vue: VueConstructor<Vue>) => void
 
-  constructor(options: FluentVueOptions) {
+  static mergeBundles(childBundles: FluentBundle[], parentBundles: FluentBundle[]): FluentBundle[] {
+    const result: FluentBundle[] = []
+
+    for (const parentBundle of parentBundles) {
+      // TODO: Better child/parent bundle matching
+      const childBundle = childBundles.find(bundle => bundle.locales[0] == parentBundle.locales[0])
+
+      if (childBundle != null) {
+        result.push(childBundle)
+      }
+
+      result.push(parentBundle)
+    }
+
+    return result
+  }
+
+  constructor(options: FluentVueOptions | FluentVue, messages?: object) {
     this.subscribers = new Map<Vue, boolean>()
-    this._bundles = options.bundles
-    this.bundlesIterable = CachedSyncIterable.from(this.bundles)
+
+    // Child is overriding messages
+    if (options instanceof FluentVue && messages != null) {
+      const parentBundles = options._bundles
+
+      const bundles = Object.entries(messages).map(([lang, resources]) => {
+        const bundle = new FluentBundle(lang)
+        bundle.addResource(resources)
+        return bundle
+      })
+
+      this._bundles = FluentVue.mergeBundles(bundles, parentBundles)
+      this.bundlesIterable = CachedSyncIterable.from(this.bundles)
+
+      // Subscribe to parent bundles change
+      const watcher = {
+        $forceUpdate: () => {
+          this.bundles = FluentVue.mergeBundles(bundles, options._bundles)
+        }
+      }
+      options.subscribe(watcher)
+    } else {
+      this._bundles = options.bundles
+      this.bundlesIterable = CachedSyncIterable.from(this.bundles)
+    }
   }
 
   getBundle(key: string): FluentBundle {

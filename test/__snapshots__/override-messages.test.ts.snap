@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`child component can override parent messages 1`] = `
+<div>
+  текст посилання
+  <div>текст посилання з під-компонента</div>
+</div>
+`;
+
+exports[`child component can override parent messages 2`] = `
+<div>
+  link text
+  <div>child link text</div>
+</div>
+`;
+
+exports[`child component updates child language when parent language changes 1`] = `
+<div>
+  текст посилання
+  <div>текст посилання з під-компонента</div>
+</div>
+`;
+
+exports[`child component updates child language when parent language changes 2`] = `
+<div>
+  link text
+  <div>child link text</div>
+</div>
+`;
+
+exports[`child component updates grandchild language when parent language changes 1`] = `
+<div>
+  текст посилання
+  <div>
+    <div>текст посилання з під-компонента</div>
+    <div>текст посилання з під-під-компонента</div>
+  </div>
+</div>
+`;
+
+exports[`child component updates grandchild language when parent language changes 2`] = `
+<div>
+  link text
+  <div>
+    <div>child link text</div>
+    <div>grandchild link text</div>
+  </div>
+</div>
+`;
