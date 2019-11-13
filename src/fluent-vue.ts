@@ -48,11 +48,9 @@ export default class FluentVue implements FluentVueObject {
       if (childBundle != null) {
         result.push(childBundle)
       }
-
-      result.push(parentBundle)
     }
 
-    return result
+    return result.concat(parentBundles)
   }
 
   constructor(options: FluentVueOptions | FluentVue, messages?: object) {
