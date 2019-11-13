@@ -38,17 +38,20 @@ export default class FluentVue implements FluentVueObject {
 
   static install: (vue: VueConstructor<Vue>) => void
 
-  static mergeBundles(childBundles: FluentBundle[], parentBundles: FluentBundle[]): FluentBundle[] {
+  static mergeMessages(parentBundles: FluentBundle[], childMessages: object): FluentBundle[] {
     const result: FluentBundle[] = []
 
     for (const parentBundle of parentBundles) {
-      // TODO: Better child/parent bundle matching
-      const childBundle = childBundles.find(bundle => bundle.locales[0] == parentBundle.locales[0])
+      const childBundle = Object.entries(childMessages).find(pair =>
+        parentBundle.locales.includes(pair[0])
+      )
 
       if (childBundle != null) {
-        const bundle = new FluentBundle(childBundle.locales)
-        bundle._terms = new Map([...parentBundle._terms, ...childBundle._terms])
-        bundle._messages = new Map([...parentBundle._messages, ...childBundle._messages])
+        const bundle = new FluentBundle(parentBundle.locales)
+        bundle.addResource(childBundle[1])
+
+        bundle._terms = new Map([...parentBundle._terms, ...bundle._terms])
+        bundle._messages = new Map([...parentBundle._messages, ...bundle._messages])
 
         result.push(bundle)
       }
@@ -62,21 +65,13 @@ export default class FluentVue implements FluentVueObject {
 
     // Child is overriding messages
     if (options instanceof FluentVue && messages != null) {
-      const parentBundles = options._bundles
-
-      const bundles = Object.entries(messages).map(([lang, resources]) => {
-        const bundle = new FluentBundle(lang)
-        bundle.addResource(resources)
-        return bundle
-      })
-
-      this._bundles = FluentVue.mergeBundles(bundles, parentBundles)
+      this._bundles = FluentVue.mergeMessages(options.bundles, messages)
       this.bundlesIterable = CachedSyncIterable.from(this.bundles)
 
       // Subscribe to parent bundles change
       const watcher = {
         $forceUpdate: () => {
-          this.bundles = FluentVue.mergeBundles(bundles, options._bundles)
+          this.bundles = FluentVue.mergeMessages(options.bundles, messages)
         }
       }
       options.subscribe(watcher)
