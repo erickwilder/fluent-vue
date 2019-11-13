@@ -29,7 +29,8 @@ export default {
     commonjs({
       namedExports: {
         'cached-iterable': ['CachedSyncIterable'],
-        '@fluent/sequence': ['mapBundleSync']
+        '@fluent/sequence': ['mapBundleSync'],
+        '@fluent/bundle': ['FluentBundle']
       }
     }),
     // Allow node_modules resolution, so you can use 'external' to control
