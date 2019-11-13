@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`child component can access parent messages 1`] = `
+<div>
+  <div>текст посилання</div>
+</div>
+`;
+
+exports[`child component can access parent messages 2`] = `
+<div>
+  <div>link text</div>
+</div>
+`;
+
 exports[`child component can override parent messages 1`] = `
 <div>
   текст посилання

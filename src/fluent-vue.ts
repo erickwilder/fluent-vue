@@ -46,11 +46,15 @@ export default class FluentVue implements FluentVueObject {
       const childBundle = childBundles.find(bundle => bundle.locales[0] == parentBundle.locales[0])
 
       if (childBundle != null) {
-        result.push(childBundle)
+        const bundle = new FluentBundle(childBundle.locales)
+        bundle._terms = new Map([...parentBundle._terms, ...childBundle._terms])
+        bundle._messages = new Map([...parentBundle._messages, ...childBundle._messages])
+
+        result.push(bundle)
       }
     }
 
-    return result.concat(parentBundles)
+    return result
   }
 
   constructor(options: FluentVueOptions | FluentVue, messages?: object) {

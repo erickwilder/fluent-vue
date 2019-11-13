@@ -76,6 +76,54 @@ describe('child component', () => {
     expect(mounted).toMatchSnapshot()
   })
 
+  it('can access parent messages', () => {
+    // Arrange
+    bundleEn.addResource(
+      new FluentResource(ftl`
+      -parent-link = link text
+      `)
+    )
+
+    bundleUk.addResource(
+      new FluentResource(ftl`
+      -parent-link = текст посилання
+      `)
+    )
+
+    const child = {
+      fluent: {
+        'en-US': new FluentResource(ftl`
+        link = { -parent-link }
+        `),
+        'uk-UA': new FluentResource(ftl`
+        link = { -parent-link }
+        `)
+      } as any,
+      template: `<div>{{ $t('link') }}</div>`
+    }
+
+    const component = {
+      components: {
+        child
+      },
+      template: `
+      <div>
+        <child></child>
+      </div>`
+    }
+
+    // Act
+    const mounted = mount(component, options)
+
+    // Assert
+    expect(mounted).toMatchSnapshot()
+
+    // Change language
+    options.fluent.bundles = [bundleEn, bundleUk]
+
+    expect(mounted).toMatchSnapshot()
+  })
+
   it('updates child language when parent language changes', () => {
     // Arrange
     bundleEn.addResource(

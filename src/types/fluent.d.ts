@@ -46,6 +46,8 @@ declare module '@fluent/bundle' {
   }
 
   export class FluentBundle {
+    _messages: Map<string, FluentResource>
+    _terms: Map<string, FluentResource>
     constructor(locales: string | string[], options?: FluentBundleContructorOptions)
     locales: string[]
     hasMessage(id: string): boolean
