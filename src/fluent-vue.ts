@@ -127,7 +127,7 @@ export default class FluentVue implements FluentVueObject {
     const context = this.getBundle(key)
     const message = this.getMessage(context, key)
 
-    if (message === null || message.value === null) {
+    if (message === null) {
       return {}
     }
 

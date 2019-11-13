@@ -55,4 +55,24 @@ describe('method', () => {
     // Assert
     expect(mounted).toMatchSnapshot()
   })
+
+  it('works without value', () => {
+    // Arrange
+    bundle.addResource(
+      new FluentResource(ftl`
+      key =
+        .attr = Attr value
+      `)
+    )
+
+    const component = {
+      template: `<div v-bind="$ta('key')"></div>`
+    }
+
+    // Act
+    const mounted = mount(component, options)
+
+    // Assert
+    expect(mounted).toMatchSnapshot()
+  })
 })
