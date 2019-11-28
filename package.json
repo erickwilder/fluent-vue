@@ -1,6 +1,12 @@
 {
   "name": "fluent-vue-monorepo",
   "private": true,
+  "author": "Ivan Demchuk <ivan.demchuk@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Demivan/fluent-vue"
+  },
+  "license": "MIT",
   "scripts": {
     "commit": "git-cz"
   },
