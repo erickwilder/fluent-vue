@@ -23,13 +23,13 @@ export default {
       if (options.fluent instanceof FluentVue) {
         this._fluent = options.fluent
       } else if (isPlainObject(options.fluent)) {
-        if (parentFluent == null) {
+        if (parentFluent === null) {
           throw new Error('Fluent option is not found in parent component')
         } else {
           this._fluent = new FluentVue(parentFluent, options.fluent)
         }
       }
-    } else if (parentFluent != null) {
+    } else if (parentFluent !== null) {
       this._fluent = parentFluent
     }
 

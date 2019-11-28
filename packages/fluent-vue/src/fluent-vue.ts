@@ -46,7 +46,7 @@ export default class FluentVue implements FluentVueObject {
         parentBundle.locales.includes(pair[0])
       )
 
-      if (childBundle != null) {
+      if (childBundle !== undefined) {
         const bundle = new FluentBundle(parentBundle.locales)
         bundle.addResource(childBundle[1])
 
@@ -64,7 +64,7 @@ export default class FluentVue implements FluentVueObject {
     this.subscribers = new Map<Vue, boolean>()
 
     // Child is overriding messages
-    if (options instanceof FluentVue && messages != null) {
+    if (options instanceof FluentVue && messages !== undefined) {
       this._bundles = FluentVue.mergeMessages(options.bundles, messages)
       this.bundlesIterable = CachedSyncIterable.from(this.bundles)
 
