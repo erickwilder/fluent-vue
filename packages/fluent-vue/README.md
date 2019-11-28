@@ -1,4 +1,4 @@
-# fluent-vue
+# 1. fluent-vue
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Greenkeeper badge](https://badges.greenkeeper.io/Demivan/fluent-vue.svg)](https://greenkeeper.io/)
@@ -21,12 +21,12 @@ Vue.js integration for Project Fluent.
 
 <!-- /TOC -->
 
-## Features
+## 1.1. Features
 
-### `$t` method - simple way of adding translations
+### 1.1.1. `$t` method - simple way of adding translations
 
 Resources:
-```ftl
+```
 aria-key = Aria value
 greeting = Hello, {$name}
 ```
@@ -41,11 +41,11 @@ Result:
 <div aria-label="Aria value">Hello, ⁨World⁩</div>
 ```
 
-### `$ta` method - gets all attributes for translation key
+### 1.1.2. `$ta` method - gets all attributes for translation key
 Useful for binding translations to custom components
 
 Resources:
-```ftl
+```
 greeting = Hello, {$name}
   .aria-label = Label value
 ```
@@ -60,10 +60,10 @@ Result:
 <div aria-label="Aria value">Hello, ⁨World⁩</div>
 ```
 
-### `v-t` directive - binds all whitelisted attributes
+### 1.1.3. `v-t` directive - binds all whitelisted attributes
 
 Resources:
-```ftl
+```
 greeting = Hello, {$name}
   .aria-label = Label value
 ```
@@ -78,10 +78,10 @@ Result:
 <div aria-label="Label value">Hello, ⁨World⁩</div>
 ```
 
-### `i18n` component - allows using components inside translations
+### 1.1.4. `i18n` component - allows using components inside translations
 
 Resources:
-```ftl
+```
 greeting = Hello, {$name}
 ```
 
@@ -99,7 +99,7 @@ Result:
 <div>Hello, ⁨<b>World</b>⁩</div>
 ```
 
-## Instalation
+## 1.2. Instalation
 
 **Add `fluent-vue` and `@fluent/bundle` to your project:**
 

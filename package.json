@@ -1,92 +1,20 @@
 {
-  "name": "fluent-vue",
-  "version": "0.0.0-development",
-  "description": "",
-  "keywords": [],
-  "main": "dist/fluent-vue.umd.js",
-  "module": "dist/fluent-vue.es5.js",
-  "typings": "dist/types/fluent-vue.d.ts",
-  "files": [
-    "dist",
-    "types"
-  ],
-  "author": "Ivan Demchuk <ivan.demchuk@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Demivan/fluent-vue"
-  },
-  "license": "MIT",
+  "name": "fluent-vue-monorepo",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts' 'types/**/*.ts'",
-    "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
-    "start": "rollup -c rollup.config.ts -w",
-    "test": "jest --coverage",
-    "test:watch": "jest --coverage --watch",
-    "test:prod": "npm run lint && npm run test -- --no-cache",
-    "deploy-docs": "ts-node tools/gh-pages-publish",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "commit": "git-cz",
-    "semantic-release": "semantic-release",
-    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "travis-deploy-once": "travis-deploy-once"
-  },
-  "lint-staged": {
-    "{src,test,types}/**/*.ts": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.vue$": "vue-jest",
-      ".(ts|tsx)": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "vue"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 85,
-        "functions": 85,
-        "lines": 85,
-        "statements": 85
-      }
-    },
-    "collectCoverageFrom": [
-      "src/*.{js,ts}"
-    ],
-    "snapshotSerializers": [
-      "jest-serializer-vue"
-    ]
+    "commit": "git-cz"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@types/jest": "^24.0.16",
     "@types/node": "^12.7.0",
+    "@vue/component-compiler-utils": "^3.0.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "colors": "^1.3.2",
     "commitizen": "^4.0.3",
@@ -99,8 +27,10 @@
     "jest-serializer-vue": "^2.0.2",
     "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
+    "lerna": "^3.19.0",
     "lint-staged": "^9.2.1",
     "lodash.camelcase": "^4.3.0",
+    "parcel-bundler": "^1.12.3",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "replace-in-file": "^4.1.1",
@@ -125,11 +55,21 @@
     "vue-jest": "^3.0.4",
     "vue-template-compiler": "^2.6.10"
   },
-  "dependencies": {
-    "@fluent/bundle": "^0.14.0",
-    "@fluent/dedent": "^0.1.0",
-    "@fluent/sequence": "^0.4.0",
-    "cached-iterable": "^0.3.0"
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "packages/**/{src,test,types}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
@@ -137,5 +77,9 @@
       "pre-commit": "lint-staged",
       "pre-push": "npm run test:prod && npm run build"
     }
+  },
+  "dependencies": {
+    "fluent-vue": "file:packages\\fluent-vue",
+    "hello-world": "file:packages\\examples\\hello-world"
   }
 }
