@@ -78,8 +78,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged",
-      "pre-push": "lerna run test:prod && lerna run build"
+      "pre-commit": "lint-staged"
     }
   },
   "dependencies": {
