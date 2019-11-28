@@ -7,6 +7,10 @@
     "url": "https://github.com/Demivan/fluent-vue"
   },
   "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "packages/examples/*"
+  ],
   "scripts": {
     "commit": "git-cz"
   },
@@ -80,9 +84,5 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
-  },
-  "dependencies": {
-    "fluent-vue": "file:packages\\fluent-vue",
-    "hello-world": "file:packages\\examples\\hello-world"
   }
 }
