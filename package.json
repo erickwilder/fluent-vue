@@ -79,7 +79,7 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged",
-      "pre-push": "npm run test:prod && npm run build"
+      "pre-push": "lerna run test:prod && lerna run build"
     }
   },
   "dependencies": {
