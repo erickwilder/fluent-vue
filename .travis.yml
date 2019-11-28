@@ -9,12 +9,9 @@ node_js:
   - '11'
   - '12'
   - '13'
+script: npx lerna run test:prod && npx lerna run build
 jobs:
   include:
-    - stage: compile
-      script: npx lerna run build
-    - stage: test
-      script: npx lerna run test:prod
     - stage: deploy
       node_js: 13
       script:
